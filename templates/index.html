@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alstudd-Object Detection</title>
+    <link rel="stylesheet" type="text/css" href="../static/index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="text/javascript" src="../static/index.js"></script>
+  </head>
+  <body>
+    <div class="App">
+      <header class="App-header">
+        <h1>Product or Object Detection AI</h1>
+        <div className="pre_img">
+          <span><img id="imagebox" src="" /></span>
+        </div>
+        <video id="videobox" width="320" height="240" controls>
+          <source src="" type="video/mp4" />
+        </video>
+        <button name="cam" class="button" id="opencam">Video Cam</button>
+        <br />
+        <hr class="line" />
+        <form>
+          <input
+            id="imageinput"
+            type="file"
+            name="image"
+            onchange="readUrl(this)"
+          />
+        </form>
+        <div class="button-loader">
+          <button onclick=disableSend() name="send" class="button" id="sendbutton">Send</button>
+          <div id="loadFile" class="loader"></div>
+        </div>
+        <br />
+        <div id="link">
+          <a href="" id="download" download>Download</a>
+        </div>
+      </header>
+    </div>
+  </body>
+</html>
