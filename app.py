@@ -34,7 +34,7 @@ def detect():
     video.save(os.path.join(uploads_dir, secure_filename(video.filename)))
     print(video)
     # subprocess.run("ls")
-    command1 = f'python detect.py --source {os.path.join(uploads_dir, secure_filename(video.filename))}'
+    command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(video.filename))}'
     # subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, fileName)], shell=True)
     subprocess.run(command1, shell=True)
     
@@ -54,7 +54,7 @@ def detect():
 @app.route("/opencam", methods=['GET', 'POST'])
 def opencam():
     print("Webcam turned on!")
-    command2 = f'python detect.py --source 0'
+    command2 = f'python3 detect.py --source 0'
     subprocess.run(command2, shell=True)
     # subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
     return "done"
