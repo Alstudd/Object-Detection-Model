@@ -16,7 +16,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 def hello_world():
     return render_template('index.html')
 
-@app.route("/detect", methods=['POST'])
+@app.route("/detect", methods=['GET', 'POST'])
 def detect():
     if not request.method == "POST":
         return
@@ -29,7 +29,7 @@ def detect():
     obj = secure_filename(video.filename)
     return obj
 
-@app.route("/opencam", methods=['GET'])
+@app.route("/opencam", methods=['GET', 'POST'])
 def opencam():
     print("Webcam turned on!")
     subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
