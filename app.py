@@ -12,7 +12,8 @@ from myModels import Img
 app = Flask(__name__)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///img.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://alstudd17:MbO0zcW7crCvfdvE4Nd298odAv6lOmQp@dpg-ckv7ok237rbc73f7gpe0-a.oregon-postgres.render.com/prod_rec_ai" 
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db_init(app)
 
@@ -28,41 +29,39 @@ def hello_world():
 def detect():
     if not request.method == "POST":
         return
-    video = request.files['video']
-    if not video:
-        return 'No file uploaded!', 400
-    video.save(os.path.join(uploads_dir, secure_filename(video.filename)))
-    print(video)
+    mainFile = request.files['video']
+    if not mainFile:
+        return 'No file uploaded!'
+    mainFile.save(os.path.join(uploads_dir, secure_filename(mainFile.filename)))
+    print(mainFile)
+
     # subprocess.run("ls")
-    command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(video.filename))}'
-    # subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, fileName)], shell=True)
-    subprocess.run(command1, shell=True)
+    # command1 = f'python detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
+    subprocess.run(['python3', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
+    # subprocess.run(command1, shell=True)
     
-    fileName = secure_filename(video.filename)
-    mimeType = video.mimetype
+    fileName = secure_filename(mainFile.filename)
+    mimeType = mainFile.mimetype
     if not fileName or not mimeType:
         return 'Bad upload!', 400
 
-    uploadedFile = Img(img=video.read(), name=fileName, mimetype=mimeType)
+    uploadedFile = Img(img=open(os.path.join(uploads_dir, secure_filename(mainFile.filename)), 'rb').read(), name=fileName, mimetype=mimeType)
     db.session.add(uploadedFile)
     db.session.commit()
-
-    # myImage = Img.query.filter_by(id=uploadedFile.id).first()
 
     return fileName
 
 @app.route("/opencam", methods=['GET', 'POST'])
 def opencam():
     print("Webcam turned on!")
-    command2 = f'python3 detect.py --source 0'
-    subprocess.run(command2, shell=True)
-    # subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
+    # command2 = f'python detect.py --source 0'
+    # subprocess.run(command2, shell=True)
+    subprocess.run(['python3', 'detect.py', '--source', '0'], shell=True)
     return "done"
 
-@app.route('/<int:id>')
-def get_file(id):
-    uploadedFile = Img.query.filter_by(id=id).first()
-    if not uploadedFile:
-        return 'File Not Found!', 404
-
-    return Response(uploadedFile.img, mimetype=uploadedFile.mimetype)
+# @app.route('/<int:id>')
+# def get_file(id):
+#     uploadedFile = Img.query.filter_by(id=id).first()
+#     if not uploadedFile:
+#         return 'File Not Found!', 404
+#     return Response(uploadedFile.img, mimetype=uploadedFile.mimetype)
