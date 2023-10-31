@@ -11,6 +11,8 @@ from myModels import Img
 
 app = Flask(__name__)
 
+app.static_folder = 'static'
+
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///img.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")

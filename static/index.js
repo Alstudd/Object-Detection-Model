@@ -24,8 +24,8 @@ window.onload = () => {
           $("#loadFile").css("display", "none");
           $('#sendbutton').removeAttr('disabled');
           $("#link").css("visibility", "visible");
-          $("#download").attr("href", "static/" + data);
-          $("#imagebox").attr("src", "static/" + data);
+          $("#download").attr("href", "/static/" + data);
+          $("#imagebox").attr("src", "/static/" + data);
           console.log(data);
         },
       });
