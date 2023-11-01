@@ -2,14 +2,24 @@
 <html>
   <head>
     <title>Alstudd-Object Detection</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
   </head>
   <body>
     <div class="App">
       <header class="App-header">
         <h1>Product or Object Detection AI</h1>
         <div className="pre_img">
-          <span><img id="imagebox" src="{{ url_for('static', filename='chatbot.gif') }}" width="320" height="240"  /></span>
+          <span
+            ><img
+              id="imagebox"
+              src="{{ url_for('static', filename='chatbot.gif') }}"
+              width="320"
+              height="240"
+          /></span>
         </div>
         <video id="videobox" width="320" height="240" controls>
           <source src="" type="video/mp4" />
@@ -17,18 +27,34 @@
         <button name="cam" class="button" id="opencam">Video Cam</button>
         <br />
         <hr class="line" />
-        <form>
+        <form method="post" action="/detect" enctype="multipart/form-data">
           <input
             id="imageinput"
             type="file"
             name="image"
             onchange="readUrl(this)"
           />
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <div class="button-loader">
+              <button
+                onclick="disableSend()"
+                name="send"
+                class="button"
+                id="sendbutton"
+              >
+                Send
+              </button>
+              <div id="loadFile" class="loader"></div>
+            </div>
+          </div>
         </form>
-        <div class="button-loader">
-          <button onclick=disableSend() name="send" class="button" id="sendbutton">Send</button>
-          <div id="loadFile" class="loader"></div>
-        </div>
         <br />
         <div id="link">
           <a href="" id="download" download>Download</a>
@@ -47,6 +73,9 @@
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='index.js') }}"
+    ></script>
   </body>
 </html>
