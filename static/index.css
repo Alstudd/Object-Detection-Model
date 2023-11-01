@@ -62,13 +62,15 @@ p {
 }
 
 #videobox {
-  padding-bottom: 10px;
+  border-radius: 15px;
+  padding-bottom: 20px;
   display: none;
 }
 
 #imagebox {
-  padding-bottom: 10px;
-  display: none;
+  border-radius: 15px;
+  padding-bottom: 20px;
+  /* display: none; */
 }
 
 #download {
@@ -123,4 +125,22 @@ p {
 
 #sendbutton:disabled {
   color: rgb(150, 150, 150);
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b7d0ff; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #66bffa; 
 }

@@ -39,8 +39,8 @@ def detect():
 
     # subprocess.run("ls")
     command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
-    # subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
     subprocess.run(command1, shell=True)
+    # subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
     
     fileName = secure_filename(mainFile.filename)
     mimeType = mainFile.mimetype

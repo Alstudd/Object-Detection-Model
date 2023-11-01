@@ -65,14 +65,14 @@ function readUrl(input) {
         imagebox.css("display", "none");
         videobox.css("display", "block");
         videobox.attr("src", e.target.result);
-        videobox.height(500);
-        videobox.width(800);
+        // videobox.height(500);
+        // videobox.width(800);
       } else {
         videobox.css("display", "none");
         imagebox.css("display", "block");
         imagebox.attr("src", e.target.result);
-        imagebox.height(500);
-        imagebox.width(800);
+        // imagebox.height(500);
+        // imagebox.width(800);
       }
     };
     reader.readAsDataURL(input.files[0]);
