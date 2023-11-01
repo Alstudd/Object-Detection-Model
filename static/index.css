@@ -62,14 +62,16 @@ p {
 }
 
 #videobox {
+  object-fit: cover;
   border-radius: 15px;
-  padding-bottom: 20px;
+  margin-bottom: 25px;
   display: none;
 }
 
 #imagebox {
+  object-fit: cover;
   border-radius: 15px;
-  padding-bottom: 20px;
+  margin-bottom: 25px;
   /* display: none; */
 }
 
