@@ -38,9 +38,9 @@ def detect():
     print(mainFile)
 
     # subprocess.run("ls")
-    # command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
-    # subprocess.run(command1, shell=True)
-    subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
+    command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
+    subprocess.run(command1, shell=True)
+    # subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
     
     fileName = secure_filename(mainFile.filename)
     mimeType = mainFile.mimetype
@@ -56,9 +56,9 @@ def detect():
 @app.route("/opencam", methods=['GET', 'POST'])
 def opencam():
     print("Webcam turned on!")
-    # command2 = f'python3 detect.py --source 0'
-    # subprocess.run(command2, shell=True)
-    subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
+    command2 = f'python3 detect.py --source 0'
+    subprocess.run(command2, shell=True)
+    # subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
     return "done"
 
 # @app.route('/<int:id>')
