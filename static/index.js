@@ -7,6 +7,7 @@ window.onload = () => {
     if (input.files && input.files[0]) {
       let formData = new FormData();
       formData.append("video", input.files[0]);
+      console.log(formData);
       $.ajax({
         url: "/detect",
         type: "POST",
@@ -24,8 +25,8 @@ window.onload = () => {
           $("#loadFile").css("display", "none");
           $('#sendbutton').removeAttr('disabled');
           $("#link").css("visibility", "visible");
-          $("#download").attr("href", "/static/" + data);
-          $("#imagebox").attr("src", "/static/" + data);
+          $("#download").attr("href", "static/" + data);
+          $("#imagebox").attr("src", "static/" + data);
           console.log(data);
         },
       });
