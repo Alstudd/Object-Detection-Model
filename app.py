@@ -1,5 +1,6 @@
 # python -m venv env: python virtual environment
 
+from io import BytesIO
 from re import DEBUG, sub
 from flask import Flask, render_template, request, redirect, send_file, url_for, Response
 from werkzeug.utils import secure_filename, send_from_directory
@@ -19,7 +20,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db_init(app)
 
-uploads_dir = os.path.join('instance/', 'uploads')
+uploads_dir = os.path.join(app.instance_path, 'uploads')
 
 os.makedirs(uploads_dir, exist_ok=True)
 
@@ -47,7 +48,7 @@ def detect():
     if not fileName or not mimeType:
         return 'Bad upload!', 400
 
-    uploadedFile = Img(img=open(os.path.join(uploads_dir, secure_filename(mainFile.filename)), 'rb').read(), name=fileName, mimetype=mimeType)
+    uploadedFile = Img(img=mainFile.read(), name=fileName, mimetype=mimeType)
     db.session.add(uploadedFile)
     db.session.commit()
 
@@ -67,6 +68,13 @@ def opencam():
 #     if not uploadedFile:
 #         return 'File Not Found!', 404
 #     return Response(uploadedFile.img, mimetype=uploadedFile.mimetype)
+
+# @app.route('/download/<int:id>')
+# def download_file(id):
+#     uploadedFile = Img.query.filter_by(id=id).first()
+#     if not uploadedFile:
+#         return 'File Not Found!', 404 
+#     return send_file(BytesIO(uploadedFile.img), attachment_filename=uploadedFile.name, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='8080', debug=True)
