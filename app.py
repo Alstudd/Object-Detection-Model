@@ -10,6 +10,8 @@ import subprocess
 from db import db_init, db
 from myModels import Img
 
+import base64
+
 app = Flask(__name__)
 
 app.static_folder = 'static'
@@ -38,6 +40,12 @@ def detect():
     mainFile.save(os.path.join(uploads_dir, secure_filename(mainFile.filename)))
     print(mainFile)
 
+    # image to url
+    with open(os.path.join(uploads_dir, secure_filename(mainFile.filename)), "rb") as image_file:
+        image_data = image_file.read()
+        base64_data = base64.b64encode(image_data).decode("utf-8")
+        data_url = f"data:{mainFile.mimetype};base64,{base64_data}"
+
     # subprocess.run("ls")
     command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
     subprocess.run(command1, shell=True)
@@ -48,7 +56,7 @@ def detect():
     if not fileName or not mimeType:
         return 'Bad upload!', 400
 
-    uploadedFile = Img(img=mainFile.read(), name=fileName, mimetype=mimeType)
+    uploadedFile = Img(img=image_data, name=fileName, mimetype=mimeType, imgURL=data_url)
     db.session.add(uploadedFile)
     db.session.commit()
 
@@ -69,12 +77,19 @@ def opencam():
 #         return 'File Not Found!', 404
 #     return Response(uploadedFile.img, mimetype=uploadedFile.mimetype)
 
+# @app.route('/display/<int:id>')
+# def display_file(id):
+#     uploadedFile = Img.query.filter_by(id=id).first()
+#     if not uploadedFile:
+#         return 'File Not Found!', 404 
+#     return send_file(BytesIO(uploadedFile.img), mimetype=uploadedFile.mimetype, download_name=uploadedFile.name)
+
 # @app.route('/download/<int:id>')
 # def download_file(id):
 #     uploadedFile = Img.query.filter_by(id=id).first()
 #     if not uploadedFile:
 #         return 'File Not Found!', 404 
-#     return send_file(BytesIO(uploadedFile.img), attachment_filename=uploadedFile.name, as_attachment=True)
+#     return send_file(BytesIO(uploadedFile.img), mimetype=uploadedFile.mimetype, download_name=uploadedFile.name, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='8080', debug=True)
