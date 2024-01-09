@@ -47,9 +47,9 @@ def detect():
         data_url = f"data:{mainFile.mimetype};base64,{base64_data}"
 
     # subprocess.run("ls")
-    command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
-    subprocess.run(command1, shell=True)
-    # subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
+    # command1 = f'python3 detect.py --source {os.path.join(uploads_dir, secure_filename(mainFile.filename))}'
+    # subprocess.run(command1, shell=True)
+    subprocess.run(['python', 'detect.py', '--source', os.path.join(uploads_dir, secure_filename(mainFile.filename))], shell=True)
     
     fileName = secure_filename(mainFile.filename)
     mimeType = mainFile.mimetype
@@ -65,31 +65,31 @@ def detect():
 @app.route("/opencam", methods=['GET', 'POST'])
 def opencam():
     print("Webcam turned on!")
-    command2 = f'python3 detect.py --source 0'
-    subprocess.run(command2, shell=True)
-    # subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
+    # command2 = f'python3 detect.py --source 0'
+    # subprocess.run(command2, shell=True)
+    subprocess.run(['python', 'detect.py', '--source', '0'], shell=True)
     return "done"
 
-# @app.route('/<int:id>')
-# def get_file(id):
-#     uploadedFile = Img.query.filter_by(id=id).first()
-#     if not uploadedFile:
-#         return 'File Not Found!', 404
-#     return Response(uploadedFile.img, mimetype=uploadedFile.mimetype)
+@app.route('/<int:id>')
+def get_file(id):
+    uploadedFile = Img.query.filter_by(id=id).first()
+    if not uploadedFile:
+        return 'File Not Found!', 404
+    return Response(uploadedFile.img, mimetype=uploadedFile.mimetype)
 
-# @app.route('/display/<int:id>')
-# def display_file(id):
-#     uploadedFile = Img.query.filter_by(id=id).first()
-#     if not uploadedFile:
-#         return 'File Not Found!', 404 
-#     return send_file(BytesIO(uploadedFile.img), mimetype=uploadedFile.mimetype, download_name=uploadedFile.name)
+@app.route('/display/<int:id>')
+def display_file(id):
+    uploadedFile = Img.query.filter_by(id=id).first()
+    if not uploadedFile:
+        return 'File Not Found!', 404 
+    return send_file(BytesIO(uploadedFile.img), mimetype=uploadedFile.mimetype, download_name=uploadedFile.name)
 
-# @app.route('/download/<int:id>')
-# def download_file(id):
-#     uploadedFile = Img.query.filter_by(id=id).first()
-#     if not uploadedFile:
-#         return 'File Not Found!', 404 
-#     return send_file(BytesIO(uploadedFile.img), mimetype=uploadedFile.mimetype, download_name=uploadedFile.name, as_attachment=True)
+@app.route('/download/<int:id>')
+def download_file(id):
+    uploadedFile = Img.query.filter_by(id=id).first()
+    if not uploadedFile:
+        return 'File Not Found!', 404 
+    return send_file(BytesIO(uploadedFile.img), mimetype=uploadedFile.mimetype, download_name=uploadedFile.name, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='8080', debug=True)
