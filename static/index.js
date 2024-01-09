@@ -28,9 +28,9 @@ window.onload = () => {
           $("#link").css("visibility", "visible");
           $("#download").attr("href", "static/" + data);
           if (fileType == "video") {
-            $("#imagebox").attr("src", "static/" + data);
-          } else {
             $("#videobox").attr("src", "static/" + data);
+          } else {
+            $("#imagebox").attr("src", "static/" + data);
           }
           console.log(data);
         },
