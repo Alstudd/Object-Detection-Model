@@ -1,4 +1,5 @@
 window.onload = () => {
+  let fileType = "image";
   $("#sendbutton").click(() => {
     $("#loadFile").css("display", "block");
     imagebox = $("#imagebox");
@@ -26,7 +27,11 @@ window.onload = () => {
           $('#sendbutton').removeAttr('disabled');
           $("#link").css("visibility", "visible");
           $("#download").attr("href", "static/" + data);
-          $("#imagebox").attr("src", "static/" + data);
+          if (fileType == "video") {
+            $("#imagebox").attr("src", "static/" + data);
+          } else {
+            $("#videobox").attr("src", "static/" + data);
+          }
           console.log(data);
         },
       });
